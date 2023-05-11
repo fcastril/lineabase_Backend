@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Domain.Common;
 using Domain.Entities;
 using FluentValidation;
 using MediatR;
@@ -17,11 +16,7 @@ namespace ServiceApplication
         public static IServiceCollection AddDependencyInjectionsApplications(this IServiceCollection services)
         {
             services.AddScoped<IValidator<RolDto>, RolValidator>();
-            services.AddScoped<IValidator<UserDto>, SecurityValidator>();
-            services.AddScoped<IValidator<ElevatorDto>, ElevatorValidator>();
-            services.AddScoped<IValidator<ElevatorMovementDto>, ElevatorManagementValidator>();
-            services.AddTransient<IElevatorService,ElevatorService>();
-            services.AddTransient<IElevatorMovementService, ElevatorMovementService>();
+            services.AddScoped<IValidator<UserDto>, UserValidator>();
             return services;
         }
 
@@ -30,10 +25,8 @@ namespace ServiceApplication
 
             services.RegisterMediatrCustom();
 
-            services.RegisterMediatrAbstractService<SecurityService, UserDto, User, ISecurityService>();
+            services.RegisterMediatrAbstractService<UserService, UserDto, User, IUserService>();
             services.RegisterMediatrAbstractService<RolService, RolDto, Rol, IRolService>();
-            services.RegisterMediatrAbstractService<ElevatorService, ElevatorDto, Elevator, IElevatorService>();
-            services.RegisterMediatrAbstractService<ElevatorMovementService, ElevatorMovementDto, ElevatorMovement, IElevatorMovementService>();
 
             return services;
         }
@@ -41,7 +34,7 @@ namespace ServiceApplication
         public static void RegisterMediatrAbstractService<Service, DTO, ENT, TImplementation>(this IServiceCollection services)
             where Service : BaseServiceApplication<ENT, DTO>
             where DTO : class, new()
-            where ENT : BaseEntity, new()
+            where ENT : class, new()
             where TImplementation : IBaseServiceApplication<ENT, DTO>
         {
             services.AddScoped(typeof(TImplementation), typeof(Service));
@@ -60,6 +53,8 @@ namespace ServiceApplication
             services.AddScoped(typeof(IRequestHandler<SearchAsyncQuery<ENT, DTO>, DTO>), typeof(SearchAsyncQueryHandler<ENT, DTO>));
             services.AddMediatR(typeof(SearchListAsyncQueryHandler<ENT, DTO>));
             services.AddScoped(typeof(IRequestHandler<SearchListAsyncQuery<ENT, DTO>, List<DTO>>), typeof(SearchListAsyncQueryHandler<ENT, DTO>));
+            services.AddMediatR(typeof(GetByIdAsyncQueryHandler<ENT, DTO>));
+            services.AddScoped(typeof(IRequestHandler<GetByIdAsyncQuery<ENT, DTO>, DTO>), typeof(GetByIdAsyncQueryHandler<ENT, DTO>));
 
         }
 

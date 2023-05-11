@@ -15,16 +15,16 @@ using Util.Ex;
 namespace ServiceApplication
 {
 
-    public class SecurityService : BaseServiceApplication<User, UserDto>, IBaseServiceApplication<User, UserDto>, ISecurityService
+    public class UserService : BaseServiceApplication<User, UserDto>, IBaseServiceApplication<User, UserDto>, IUserService
     {
 
 
         private readonly IConfiguration _configurate;
         private readonly IRolService _rolService;
 
-        public SecurityService(IConfiguration configuration,
+        public UserService(IConfiguration configuration,
             IRolService rolService,
-            ISecurityRepository securityRepository)
+            IUserRepository securityRepository)
             : base(securityRepository)
         {
             _configurate = configuration;
@@ -37,25 +37,26 @@ namespace ServiceApplication
 
         public async Task<Login> Login(Login login)
         {
-            var user = await this.FirstOrDefautlModelBy(f => (f.UserName == login.UserName || f.Email == login.UserName));
+            const string MessageError = "Error at the moment autentication";
+            var user = await this.FirstOrDefautlModelBy(f => (f.UserName.Value == login.UserName || f.Email == login.UserName));
             if (user is null)
-                throw new DomainException("El User " + login.UserName + " no ha sido encontrado");
-            if (user.Password != login.Password)
-                throw new DomainException("La contraseña del User " + login.UserName + " es incorrecta");
+                throw new DomainException(MessageError);
+            if (user.Password.Value != login.Password)
+                throw new DomainException(MessageError);
             if (user != null)
             {
                 var authClaims = new[]
                 {
-                    new Claim(ClaimTypes.NameIdentifier, user.Id),
+                    new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                     new Claim(ClaimTypes.Email, user.Email)
                     };
 
-                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configurate["JWTMONGO:Secret"]));
+                var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configurate["JWT:Secret"]));
                 var tokenDescriptor = new SecurityTokenDescriptor
                 {
                     Subject = new ClaimsIdentity(authClaims),
-                    Issuer = _configurate["JWTMONGO:ValidIssuer"],
-                    Audience = _configurate["JWTMONGO:ValidAudience"],
+                    Issuer = _configurate["JWT:ValidIssuer"],
+                    Audience = _configurate["JWT:ValidAudience"],
 
                     Expires = DateTime.Now.AddHours(24),
                     SigningCredentials = new SigningCredentials(authSigningKey, SecurityAlgorithms.HmacSha256Signature)
@@ -68,15 +69,15 @@ namespace ServiceApplication
                 {
                     Token = tokenHandler.WriteToken(createdToken),
                     Expira = tokenDescriptor.Expires,
-                    UserName = user.UserName,
-                    Profile = new System.Collections.Generic.List<Rol>(),
+                    UserName = user.UserName.Value,
+                    Profile = new Rol(),
                 };
-                log.Profile = user?.Roles;
+                log.Profile = user?.Rol;
                 return log;
             }
             else
             {
-                throw new DomainException("Usuario o contraseña invalidos");
+                throw new DomainException(MessageError);
             }
         }
     }

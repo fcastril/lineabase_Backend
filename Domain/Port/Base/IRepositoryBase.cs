@@ -8,12 +8,14 @@ using Util.Common;
 namespace Domain.Port
 {
     public interface IRepositoryBase<T>
-        where T : BaseEntity, new()
+        where T : class, new()
     {
+
+        Task<T> GetById(Guid id);
 
         Task<List<T>> TolistModel();
 
-        Task<bool> DeleteModel(string property, string value);
+        Task<bool> DeleteModel(Guid id);
 
         Task<T> CreateModel(T entity);
 
@@ -25,9 +27,9 @@ namespace Domain.Port
 
         Task<T> FirstOrDefautlModelBy(Expression<Func<T, bool>> expression);
 
-        Task<Paginate<T>> Paginate(int pagina, int tamaño);
+        Task<Paginate<T>> Paginate(int page, int lenght);
 
-        Task<Paginate<T>> Paginate(Paginate<T> paginadoDto);
+        Task<Paginate<T>> Paginate(Paginate<T> paginateDto);
 
     }
 }

@@ -14,10 +14,9 @@ namespace Domain.ValueObject
 
         private NameValueObject(string value) : base(value)
         {
-            Lenght = 250;
         }
 
-        private static Result<NameValueObject, DomainModelExceptions> Create(string value, int length, int maxLength = 0)
+        private static Result<NameValueObject, DomainModelExceptions> CreateNameValueObject (string value, int length, int maxLength = 0)
         {
             if (string.IsNullOrWhiteSpace(value))
                 return DomainExceptions.General.ValueIsRequired(name, tag);
@@ -40,7 +39,7 @@ namespace Domain.ValueObject
         {
             tag = string.IsNullOrEmpty(metadata.Tag) ? tag : metadata.Tag;
             name = string.IsNullOrEmpty(metadata.LogicName) ? name : metadata.LogicName;
-            return Create(value, metadata.Length, metadata.MinLength);
+            return CreateNameValueObject(value, metadata.Length, metadata.MinLength);
         }
 
         public static Result<NameValueObject, DomainModelExceptions> CreateEqual(string value, Metadata metadata)
@@ -49,7 +48,7 @@ namespace Domain.ValueObject
             name = string.IsNullOrEmpty(metadata.LogicName) ? name : metadata.LogicName;
             if (value?.Trim()?.Length != metadata.Length)
                 return DomainExceptions.General.InvalidLength(metadata.Length, name, tag);
-            return Create(value, metadata.Length);
+            return CreateNameValueObject(value, metadata.Length);
         }
 
         public static Result<NameValueObject, DomainModelExceptions> CreateEmpty(string value, Metadata metadata)

@@ -10,9 +10,9 @@ namespace ServiceApplication.CQRS
 
     public class LoginAsyncQueryHandler : IRequestHandler<LoginAsyncQuery, Login>
     {
-        protected readonly ISecurityService _implementation;
+        protected readonly IUserService _implementation;
 
-        public LoginAsyncQueryHandler(ISecurityService implementation)
+        public LoginAsyncQueryHandler(IUserService implementation)
         {
             _implementation = implementation;
         }

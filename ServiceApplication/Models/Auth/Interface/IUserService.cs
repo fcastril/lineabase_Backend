@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace ServiceApplication
 {
-    public interface ISecurityService : IBaseServiceApplication<User, UserDto>
+    public interface IUserService : IBaseServiceApplication<User, UserDto>
     {
         Task<Login> Login(Login login);
 

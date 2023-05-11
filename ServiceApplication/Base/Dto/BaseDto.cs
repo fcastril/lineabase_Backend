@@ -1,8 +1,10 @@
-﻿namespace ServiceApplication.Dto
+﻿using System;
+
+namespace ServiceApplication.Dto
 {
-    public class BaseDto
+    public class BaseDto: BaseGeneralDto
     {
-        public string Id { get; set; } 
+        public Guid Id { get; set; } 
     }
 }
 

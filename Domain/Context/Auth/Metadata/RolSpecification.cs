@@ -9,11 +9,11 @@ namespace Domain.AggregateModels
     {
         public static Expression<Func<Rol, bool>> ExistRolByName(string name)
         {
-            return x => x.Name == name;
+            return x => x.Name.Value == name;
         }
         public static Expression<Func<Rol, bool>> ExistRolByDescription(string description)
         {
-            return x => x.Description == description;
+            return x => x.Description.Value == description;
         }
     }
 }

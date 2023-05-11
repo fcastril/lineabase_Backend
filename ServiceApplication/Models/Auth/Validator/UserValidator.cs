@@ -5,11 +5,11 @@ using ServiceApplication.Dto;
 
 namespace ServiceApplication.Models.Auth.Validator
 {
-    public class SecurityValidator: AbstractValidator<UserDto>
+    public class UserValidator: AbstractValidator<UserDto>
     {
-        private readonly ISecurityRepository _repository;
+        private readonly IUserRepository _repository;
 
-        public SecurityValidator(ISecurityRepository repository)
+        public UserValidator(IUserRepository repository)
         {
 
             _repository = repository;
@@ -20,7 +20,7 @@ namespace ServiceApplication.Models.Auth.Validator
 
             RuleFor(x => x.Password).NotEmpty().WithErrorCode($"PasswordEmpty")
            .WithMessage(x => x.Password)
-                .WithName(nameof(Rol.Description));
+                .WithName(nameof(User.Password));
 
 
             RuleFor(v => v)

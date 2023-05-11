@@ -47,7 +47,7 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddMediatrDependecyInjection();
 
-    JwtNoSql(services);
+    Jwt(services);
     services.AddAuthorization();
     services.AddControllers();
 
@@ -66,7 +66,7 @@ void ConfiguracionBase(IServiceCollection services)
     #region swagger
     services.AddSwaggerGen(c =>
     {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "API ELEVATOR MANAGER", Version = "v1", Description = "" });
+        c.SwaggerDoc("v1", new OpenApiInfo { Title = "API BaseLine", Version = "v1", Description = "" });
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
         {
             Name = "Authorization",
@@ -116,9 +116,8 @@ void ConfiguracionBase(IServiceCollection services)
 
 }
 
-void JwtNoSql(IServiceCollection services)
+void Jwt(IServiceCollection services)
 {
-    #region JWT-mongo
     services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -136,9 +135,8 @@ void JwtNoSql(IServiceCollection services)
                 //ValidIssuer = Configuration["JWT:ValidIssuer"],
 
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTMONGO:Secret"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
             };
         });
-    #endregion
 }
 
