@@ -1,5 +1,6 @@
 ﻿using Domain.Port;
 using Infrastructure.Repository;
+using Infrastructure.SQLServer;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -21,6 +22,7 @@ namespace Infrastructure
             services.AddSingleton<IConfigurateCosmosDB>(sp => sp.GetRequiredService<IOptions<ConfigurateCosmosDB>>().Value);
 
             services.AddScoped<IMainContextCosmos, MainContextCosmosDB>();
+            services.AddScoped<IMainContextSQLServer, MainContextSQLServer>();
             #endregion
 
             services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
