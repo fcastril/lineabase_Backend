@@ -1,23 +1,23 @@
-﻿using Domain.Common;
-using Domain.Port;
-using MongoDB.Driver;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Domain.Common;
+using Domain.Port;
+using MongoDB.Driver;
 using Util.Common;
 
 namespace Infrastructure
 {
-    public class RepositoryBase<T> : IRepositoryBase<T>
-        where T : BaseEntity, new()
+    public class RepositoryBaseCosmosDB<T> : IRepositoryBase<T>
+        where T : BaseEntityCosmosDB, new()
     {
         public IMainContextCosmos MainContext { get; set; }
 
         protected IMongoCollection<T> Coleccion;
-        public RepositoryBase(IMainContextCosmos mainContext)
+        public RepositoryBaseCosmosDB(IMainContextCosmos mainContext)
         {
             MainContext = mainContext;
             Coleccion = MainContext.GetCollection<T>(typeof(T).Name);
@@ -28,8 +28,10 @@ namespace Infrastructure
             return await Coleccion.Find(_ => true).ToListAsync();
         }
 
-        public async Task<bool> DeleteModel(string property, string value)
+        public async Task<bool> DeleteModel(Guid id)
         {
+            string property = "Id";
+            string value = id.ToString();
             await Coleccion.DeleteOneAsync(Builders<T>.Filter.Eq(property, value));
             return true;
         }
@@ -52,7 +54,10 @@ namespace Infrastructure
             await Coleccion.FindOneAndReplaceAsync(Builders<T>.Filter.Eq("Id", id), entity);
             return entity;
         }
-
+        public async Task<T> GetById(Guid id)
+        {
+            return await Coleccion.Find(x=>x.Id == id).SingleOrDefaultAsync();
+        }
         public async Task<List<T>> ToListModelBy(Expression<Func<T, bool>> expression)
         {
             return await Coleccion.Find(expression).ToListAsync();
@@ -71,9 +76,9 @@ namespace Infrastructure
         public async Task<Paginate<T>> Paginate(Paginate<T> paginadoDto)
         {
             IQueryable<T> Listabase;
-            if (paginadoDto.FiltersPaginate != null && paginadoDto.FiltersPaginate.Count > 0)
+            if (paginadoDto.Filters != null && paginadoDto.Filters.Count > 0)
             {
-                FilterDefinition<T> filtrado = this.ConfigurateFilters(paginadoDto.FiltersPaginate, paginadoDto.Operator);
+                FilterDefinition<T> filtrado = this.ConfigurateFilters(paginadoDto.Filters);
 
                 Listabase = this.Coleccion.Find(filtrado).ToList().AsQueryable();
             }
@@ -85,7 +90,7 @@ namespace Infrastructure
             return await Paginator<T>.Paginate(Listabase, paginadoDto.Page, paginadoDto.Count);
         }
 
-        private FilterDefinition<T> ConfigurateFilters(List<FilterPaginate> filtros, LogicalOperators operador)
+        private FilterDefinition<T> ConfigurateFilters(List<FilterPaginate> filtros)
         {
             FilterDefinition<T> filter = null;
             List<FilterDefinition<T>> filters = new List<FilterDefinition<T>>();
@@ -93,23 +98,23 @@ namespace Infrastructure
             foreach (FilterPaginate filterValue in filtros)
             {
                 filters.Add(GetFilter(filterValue.Property, filterValue.Value));
+                if (filters.Count == 1)
+                {
+                    filter = GetFilter(filtros.FirstOrDefault().Property, filtros.FirstOrDefault().Value);
+                }
+                else if (filters.Count > 0)
+                {
+                    if (filterValue.Conditional == LogicalOperators.And)
+                    {
+                        filter = Builders<T>.Filter.And(filters);
+                    }
+                    else if (filterValue.Conditional == LogicalOperators.Or)
+                    {
+                        filter = Builders<T>.Filter.Or(filters);
+                    }
+                }
             }
 
-            if (filters.Count == 1)
-            {
-                filter = GetFilter(filtros.FirstOrDefault().Property, filtros.FirstOrDefault().Value);
-            }
-            else if (filters.Count > 0)
-            {
-                if (operador == LogicalOperators.And)
-                {
-                    filter = Builders<T>.Filter.And(filters);
-                }
-                else if (operador == LogicalOperators.Or)
-                {
-                    filter = Builders<T>.Filter.Or(filters);
-                }
-            }
             return filter;
         }
 

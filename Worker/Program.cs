@@ -6,7 +6,6 @@ using ServiceApplication;
 using ServicesBus.HandlerAzureServiceBus;
 using ServicesBus.HandlerAzureServiceBus.Listener;
 using Util.Common;
-using Worker;
 
 await Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
@@ -24,16 +23,9 @@ await Host.CreateDefaultBuilder(args)
         services.AddSingleton<IMainContextCosmos, MainContextCosmosDB>();
         #endregion
 
-        services.AddSingleton(typeof(IElevatorMovementRepository), typeof(ElevatorMovementRepository));
-        services.AddSingleton(typeof(IElevatorRepository), typeof(ElevatorRepository));
 
         services.AddTransient<IServicesListenerHandler, ServicesListenerHandler>();
         services.AddTransient<IServicesListener2Handler, ServicesListener2Handler>();
-        services.AddTransient<IElevatorService, ElevatorService>();
-        services.AddTransient<IElevatorMovementService, ElevatorMovementService>();
-
-        services.AddHostedService<Worker.initial.ElevatorQueueHP>();
-        services.AddHostedService<Worker.initial.ElevatorQueueLP>();
     })
     .Build()
     .RunAsync();

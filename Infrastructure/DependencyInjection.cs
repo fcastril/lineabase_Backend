@@ -1,5 +1,4 @@
 ﻿using Domain.Port;
-using Infrastructure.Integration;
 using Infrastructure.Repository;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,10 +23,8 @@ namespace Infrastructure
             services.AddScoped<IMainContextCosmos, MainContextCosmosDB>();
             #endregion
 
-            services.AddScoped(typeof(ISecurityRepository), typeof(SecurityRepository));
+            services.AddScoped(typeof(IUserRepository), typeof(UserRepository));
             services.AddScoped(typeof(IRolRepository), typeof(RolRepository));
-            services.AddScoped(typeof(IElevatorMovementRepository), typeof(ElevatorMovementRepository));
-            services.AddScoped(typeof(IElevatorRepository), typeof(ElevatorRepository));
 
             return services;
         }

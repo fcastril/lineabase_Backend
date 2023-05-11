@@ -23,47 +23,45 @@ namespace Api6.Controllers
     {
         private readonly IMediator mediator;
         private readonly IServicesBusHandler _servicesBusHandler;
-        private readonly IElevatorMovementService _elevatorService;
         private readonly IUtil _util;
 
         public QueueController(IMediator mediator,IServicesBusHandler servicesBusHandler,
-            IElevatorMovementService elevatorService,Util.Common.IUtil util) : base(mediator)
+            Util.Common.IUtil util) : base(mediator)
         {
             this.mediator = mediator;
             this._servicesBusHandler = servicesBusHandler;
-            _elevatorService = elevatorService;
             _util = util;
         }
 
-        [HttpPost("sendEventHighPriority")]
-        public async Task<IActionResult> SendEventHP(QueueInputDto eventQueue)
-        {
-            var rest =await _elevatorService.CreateModel(new ServiceApplication.Dto.ElevatorMovementDto()
-            {
-                ElevatorCode = _util.GetHeaderRequest(EHeaders.CodeClient),
-                Priority = 1,
-                Floor = eventQueue.Floor,
-                Status= States.Active.ToString(),
-                Code=Guid.NewGuid().ToString()
-            }) ; ;
-            await _servicesBusHandler.SendMessageQueue(new EventQueue() {Floor= eventQueue.Floor ,Priority=1,CodeElevator = rest.ElevatorCode, CodeMovement = rest.Code }, "queuehighpriority");
-            return HandlerResponse(eventQueue);
-        }
+        //[HttpPost("sendEventHighPriority")]
+        //public async Task<IActionResult> SendEventHP(QueueInputDto eventQueue)
+        //{
+        //    var rest =await _elevatorService.CreateModel(new ServiceApplication.Dto.ElevatorMovementDto()
+        //    {
+        //        ElevatorCode = _util.GetHeaderRequest(EHeaders.CodeClient),
+        //        Priority = 1,
+        //        Floor = eventQueue.Floor,
+        //        Status= States.Active.ToString(),
+        //        Code=Guid.NewGuid().ToString()
+        //    }) ; ;
+        //    await _servicesBusHandler.SendMessageQueue(new EventQueue() {Floor= eventQueue.Floor ,Priority=1,CodeElevator = rest.ElevatorCode, CodeMovement = rest.Code }, "queuehighpriority");
+        //    return HandlerResponse(eventQueue);
+        //}
 
-        [HttpPost("sendEventLowPriority")]
-        public async Task<IActionResult> SendEventLP(QueueInputDto eventQueue)
-        {
-            var rest=await _elevatorService.CreateModel(new ServiceApplication.Dto.ElevatorMovementDto()
-            {
-                ElevatorCode = _util.GetHeaderRequest(EHeaders.CodeClient),
-                Priority = 2,
-                Floor = eventQueue.Floor,
-                Status = States.Active.ToString(),
-                Code = Guid.NewGuid().ToString()
-            });
-            await _servicesBusHandler.SendMessageQueue(new EventQueue() { Floor = eventQueue.Floor, Priority = 2 ,CodeElevator=rest.ElevatorCode,CodeMovement= rest.Code}, "queuelowpriority");
-            return HandlerResponse(eventQueue);
-        }
+        //[HttpPost("sendEventLowPriority")]
+        //public async Task<IActionResult> SendEventLP(QueueInputDto eventQueue)
+        //{
+        //    var rest=await _elevatorService.CreateModel(new ServiceApplication.Dto.ElevatorMovementDto()
+        //    {
+        //        ElevatorCode = _util.GetHeaderRequest(EHeaders.CodeClient),
+        //        Priority = 2,
+        //        Floor = eventQueue.Floor,
+        //        Status = States.Active.ToString(),
+        //        Code = Guid.NewGuid().ToString()
+        //    });
+        //    await _servicesBusHandler.SendMessageQueue(new EventQueue() { Floor = eventQueue.Floor, Priority = 2 ,CodeElevator=rest.ElevatorCode,CodeMovement= rest.Code}, "queuelowpriority");
+        //    return HandlerResponse(eventQueue);
+        //}
     }
 
 
