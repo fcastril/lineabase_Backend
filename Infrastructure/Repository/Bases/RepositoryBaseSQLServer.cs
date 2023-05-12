@@ -63,10 +63,10 @@ namespace Infrastructure.Repository.Bases
 
         public async Task<T> UpdateModel(T obj)
         {
-            obj = SetPropertyValue("DateLastUpdate", obj, DateTime.UtcNow);
+            obj.ChangeDateLastUpdate();
             string id = GetPropertyValue("Id", obj);
             entity.Update(obj);
-            await MainContext.SaveChangesAsync();
+            int result = await MainContext.SaveChangesAsync();
             return obj;
         }
 

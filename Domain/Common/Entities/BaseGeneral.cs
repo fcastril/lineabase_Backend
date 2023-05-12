@@ -21,6 +21,11 @@ namespace Domain.Common
         public DateTime DateCreation { get; private set; }
         public string Status { get; private set; }
         public DateTime? DateLastUpdate { get; private set; }
+
+        public void ChangeDateLastUpdate()
+        {
+            DateLastUpdate = DateTime.UtcNow;
+        }
     }
 }
 
