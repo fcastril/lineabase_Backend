@@ -1,4 +1,5 @@
 ﻿using Api.Base;
+using Api6.Common;
 using Domain.Common;
 using Domain.Entities;
 using MediatR;
@@ -16,7 +17,7 @@ using Utilidades;
 
 namespace Api6.Controllers
 {
-    [Route(Constants.UriForDefaultWebApi + "[controller]")]
+    [Route(ConstantsAPI.UriForDefaultWebApi + "[controller]")]
     [ApiController]
 
     public class QueueController : HandlerBaseLiteController<EventQueue>
