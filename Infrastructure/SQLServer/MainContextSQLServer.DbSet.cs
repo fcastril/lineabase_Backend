@@ -6,7 +6,8 @@ namespace Infrastructure.SQLServer
 {
 	public partial class MainContextSQLServer
 	{
-		public virtual DbSet<BaseTable> BaseTable { get; set; }
-	}
+		public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<Rol> Roles { get; set; }
+    }
 }
 

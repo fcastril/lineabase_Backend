@@ -72,7 +72,7 @@ namespace ServiceApplication
                     UserName = user.UserName.Value,
                     Profile = new Rol(),
                 };
-                log.Profile = user?.Rol;
+                log.Profile = user?.RolNavigation;
                 return log;
             }
             else

@@ -21,7 +21,6 @@
     <None Remove="Newtonsoft.Json" />
     <None Remove="Common\Constants\" />
     <None Remove="Entities\" />
-    <None Remove="Entities\BaseTable\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -49,7 +48,6 @@
     <Folder Include="Context\Auth\Specifications\" />
     <Folder Include="Common\Constants\" />
     <Folder Include="Entities\" />
-    <Folder Include="Entities\BaseTable\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CSharpFunctionalExtensions" Version="2.37.0" />

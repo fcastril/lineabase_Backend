@@ -1,6 +1,7 @@
 ﻿using Domain.Common;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities
 {
@@ -26,15 +27,14 @@ namespace Domain.Entities
             Email = email;
             Name = ValueObjectString.Create(name, UserMetadata.Name).Value;
             Password = ValueObjectString.Create(password, UserMetadata.Password).Value;
-            Rol = rol;
+            RolNavigation = rol;
         }
-
 
         public ValueObjectString UserName { get; private set; }
         public string Email { get; private set; }
         public ValueObjectString Name { get; private set; }
         public ValueObjectString Password { get; private set; }
-        public Rol Rol { get; private set; }
+        public virtual Rol RolNavigation { get; private set; }
     }
 }
  

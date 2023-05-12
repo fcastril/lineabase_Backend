@@ -13,9 +13,9 @@ namespace Api.Controllers
     [AllowAnonymous]
     [Route(Constants.UriForDefaultWebApi + "[controller]")]
     [ApiController]
-    public class SecurityController : HandlerBaseController<User, UserDto>
+    public class UserController : HandlerBaseController<User, UserDto>
     {
-        public SecurityController(IValidator<UserDto> validator, IMediator mediator)
+        public UserController(IValidator<UserDto> validator, IMediator mediator)
             : base(validator, mediator)
         {
 
