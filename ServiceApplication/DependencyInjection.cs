@@ -49,6 +49,8 @@ namespace ServiceApplication
             services.AddScoped(typeof(IRequestHandler<ToListAsyncQuery<ENT, DTO>, List<DTO>>), typeof(ToListAsyncQueryHandler<ENT, DTO>));
             services.AddMediatR(typeof(PaginateAsyncQueryHandler<ENT, DTO>));
             services.AddScoped(typeof(IRequestHandler<PaginateAsyncQuery<ENT, DTO>, Paginate<DTO>>), typeof(PaginateAsyncQueryHandler<ENT, DTO>));
+            services.AddMediatR(typeof(PaginateWithPageAsyncQueryHandler<ENT, DTO>));
+            services.AddScoped(typeof(IRequestHandler<PaginateWithPageAsyncQuery<ENT, DTO>, Paginate<DTO>>), typeof(PaginateWithPageAsyncQueryHandler<ENT, DTO>));
             services.AddMediatR(typeof(SearchAsyncQueryHandler<ENT, DTO>));
             services.AddScoped(typeof(IRequestHandler<SearchAsyncQuery<ENT, DTO>, DTO>), typeof(SearchAsyncQueryHandler<ENT, DTO>));
             services.AddMediatR(typeof(SearchListAsyncQueryHandler<ENT, DTO>));

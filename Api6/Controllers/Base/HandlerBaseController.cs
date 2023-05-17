@@ -69,6 +69,11 @@ namespace Api.Base
         {
             return this.HandlerResponse<Paginate<DTO>>(await _mediator.Send(new PaginateAsyncQuery<ENT, DTO>(paginado)));
         }
+        [HttpPost("paginator/pageNo/{pageNo}/pages/{pages}")]
+        public async Task<IActionResult> PaginatorPage(int pageNo, int pages)
+        {
+            return this.HandlerResponse<Paginate<DTO>>(await _mediator.Send(new PaginateWithPageAsyncQuery<ENT, DTO>(pageNo, pages)));
+        }
         [HttpGet("search/{property}/data/{value}")]
         public async Task<IActionResult> GetBy(string property, string value)
         {
