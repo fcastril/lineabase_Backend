@@ -97,10 +97,10 @@ namespace Infrastructure
 
             foreach (FilterPaginate filterValue in filtros)
             {
-                filters.Add(GetFilter(filterValue.Property, filterValue.Value));
+                filters.Add(GetFilter(filterValue.Property, filterValue.Value.ToString()));
                 if (filters.Count == 1)
                 {
-                    filter = GetFilter(filtros.FirstOrDefault().Property, filtros.FirstOrDefault().Value);
+                    filter = GetFilter(filtros.FirstOrDefault().Property, filtros.FirstOrDefault().Value.ToString());
                 }
                 else if (filters.Count > 0)
                 {

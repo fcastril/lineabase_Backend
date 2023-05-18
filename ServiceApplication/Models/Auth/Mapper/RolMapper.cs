@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Domain.Entities;
 using ServiceApplication.Dto;
 

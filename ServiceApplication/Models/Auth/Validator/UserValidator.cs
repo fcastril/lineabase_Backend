@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using System;
+using Domain.Entities;
 using Domain.Port;
 using FluentValidation;
 using ServiceApplication.Dto;

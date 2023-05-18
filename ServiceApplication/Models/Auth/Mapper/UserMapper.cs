@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Domain.Entities;
 using ServiceApplication.Dto;
+using System;
 using System.Collections.Generic;
 
 namespace ServiceApplication.Models.Auth.Mapper
