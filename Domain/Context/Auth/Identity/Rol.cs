@@ -1,33 +1,33 @@
-﻿using Domain.AggregateModels;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using Domain.AggregateModels;
 using Domain.Common;
-using Domain.ValueObject;
 
 namespace Domain.Entities
 {
-    public class Rol : BaseEntity
+    public class Rol : BaseEntitySQLServer
     {
         public Rol()
         {
 
         }
-        public Rol(string name, string description, bool root)
+        public Rol(Guid id, string name, string description, bool root, DateTime dateCreated, string status, DateTime? dateLastUpdate)
+            : base(id, dateCreated, status, dateLastUpdate)
         {
-            setProperties(name, description, root);
-        }
-        public Rol(string id, string name, string description, bool root)
-        {
-            Id = id;
             setProperties(name, description, root);
         }
 
         private void setProperties(string name, string description, bool root)
         {
-            Name = NameValueObject.Create(name, RolMetadata.Name).Value.Value;
-            Description = NameValueObject.Create(description, RolMetadata.Description).Value.Value;
+            Name = ValueObjectString.Create(name, RolMetadata.Name).Value;
+            Description = ValueObjectString.Create(description, RolMetadata.Description).Value;
             Root = root;
         }
-        public string Name { get; private set; }
-        public string Description { get; private set; }
+        public ValueObjectString Name { get; private set; }
+        public ValueObjectString Description { get; private set; }
         public bool Root { get; private set; }
+        public virtual List<User> Users { get; set; }
+
     }
 }

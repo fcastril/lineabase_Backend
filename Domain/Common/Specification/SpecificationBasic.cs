@@ -2,7 +2,7 @@
 
 namespace Domain.Common.Specification
 {
-    public class SpecificationBasic<T> : SpecificationBase<T> where T : BaseEntity
+    public class SpecificationBasic<T> : SpecificationBase<T> where T : BaseGeneral
     {
     }
 }

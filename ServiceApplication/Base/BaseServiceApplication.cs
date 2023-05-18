@@ -12,7 +12,7 @@ using Util.Common;
 namespace ServiceApplication.Base
 {
     public abstract partial class BaseServiceApplication<ENT, DTO> : IBaseServiceApplication<ENT, DTO>
-        where ENT : BaseEntity, new()
+        where ENT : class, new()
         where DTO : class, new()
     {
 
@@ -61,16 +61,24 @@ namespace ServiceApplication.Base
             return MapLstToDTO<ENT, DTO>(await RepositoryBase.TolistModel());
 
         }
+        /// <summary>
+        /// Consultar el Registro por ID
+        /// </summary>
+        /// <returns></returns>
+        public virtual async Task<DTO> GetById(Guid id)
+        {
+            return MapToDTO<ENT, DTO>(await RepositoryBase.GetById(id));
 
+        }
         /// <summary>
         /// Eliminar modelo por un ID
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public virtual async Task<bool> DeleteModel(string id)
+        public virtual async Task<bool> DeleteModel(Guid id)
         {
 
-            return await RepositoryBase.DeleteModel("Id", id); ;
+            return await RepositoryBase.DeleteModel(id); ;
         }
 
         /// <summary>
@@ -153,57 +161,7 @@ namespace ServiceApplication.Base
             await Task.FromResult(0);
         }
 
-        /// <summary>
-        /// Method configure filter paginate
-        /// </summary>
-        /// <param name="filtros"></param>
-        /// <returns></returns>
-        //public async Task<Expression<Func<T, bool>>> ConfigureFilter(Util.Common.FiltersPaginate filtros)
-        //{
-        //    Expression<Func<T, bool>> expression = null;
-        //    ParameterExpression param = Expression.Parameter(typeof(T), "t");
-        //    if (filtros?.ItemFilter.Count == 1)
-        //    {
-        //        var body =
-        //         Expression.Equal(
-        //              Expression.PropertyOrField(param, filtros.ItemFilter[0].Property),
-        //              Expression.Constant(filtros.ItemFilter[0].Property.Contains("Id")?Convert.ToInt32(filtros.ItemFilter[0].Value): filtros.ItemFilter[0].Value)
-        //         );
-
-        //        expression = Expression.Lambda<Func<T, bool>>(body, param);
-        //    }
-        //    else if (filtros.ItemFilter.Count == 2)
-        //    {
-        //        BinaryExpression body = null;
-        //        if (filtros.Operador == Util.Common.OperadoresLogicos.And)
-        //        {
-        //            body = Expression.AndAlso(
-        //            Expression.Equal(
-        //                 Expression.PropertyOrField(param, filtros.ItemFilter[0].Property),
-        //                 Expression.Constant(filtros.ItemFilter[0].Value)
-        //            ),
-        //            Expression.Equal(
-        //                 Expression.PropertyOrField(param, filtros.ItemFilter[1].Property),
-        //                 Expression.Constant(filtros.ItemFilter[1].Value)
-        //            )) ;
-        //        }
-        //        if (filtros.Operador == Util.Common.OperadoresLogicos.Or)
-        //        {
-        //            body = Expression.Or(
-        //            Expression.Equal(
-        //                 Expression.PropertyOrField(param, filtros.ItemFilter[0].Property),
-        //                 Expression.Constant(filtros.ItemFilter[0].Value)
-        //            ),
-        //            Expression.Equal(
-        //                 Expression.PropertyOrField(param, filtros.ItemFilter[1].Property),
-        //                 Expression.Constant(filtros.ItemFilter[1].Value)
-        //            ));
-        //        }
-        //        expression = Expression.Lambda<Func<T, bool>>(body, param);
-        //    }
-
-        //    return await Task.FromResult(expression);
-        //}
+     
 
         /// <summary>
         /// Metodo para sincronizae datos

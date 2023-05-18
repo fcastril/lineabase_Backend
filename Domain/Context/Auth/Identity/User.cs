@@ -1,29 +1,40 @@
 ﻿using Domain.Common;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Domain.Entities
 {
-    public class User : BaseEntity
+    public class User : BaseEntitySQLServer
     {
-
         public User()
         {
-        }
 
-        public User(string userName, string email, string name, string password, List<Rol> roles)
+        }
+        public User(
+            Guid id,
+            string userName,
+            string email,
+            string name,
+            string password,
+            DateTime dateCreated,
+            string status,
+            DateTime? dateLastUpdated,
+            Rol rol) :
+            base(id, dateCreated, status, dateLastUpdated)
         {
-            UserName = userName;
+            UserName = ValueObjectString.Create(userName, UserMetadata.Username).Value;
             Email = email;
-            Nombre = name;
-            Password = password;
-            Roles = roles;
+            Name = ValueObjectString.Create(name, UserMetadata.Name).Value;
+            Password = ValueObjectString.Create(password, UserMetadata.Password).Value;
+            RolNavigation = rol;
         }
 
-
-        public string UserName { get; private set; }
+        public ValueObjectString UserName { get; private set; }
         public string Email { get; private set; }
-        public string Nombre { get; private set; }
-        public string Password { get; private set; }
-        public List<Rol> Roles { get; private set; }
+        public ValueObjectString Name { get; private set; }
+        public ValueObjectString Password { get; private set; }
+        public virtual Rol RolNavigation { get; private set; }
     }
 }
+ 

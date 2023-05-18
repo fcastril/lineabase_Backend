@@ -6,6 +6,6 @@ namespace Domain.Entities
 {
     public class UserSpecification : SpecificationBasic<User>
     {
-        public static Expression<Func<User, bool>> ExistByUsername(string userName, string id) => x => x.UserName == userName && x.Id != id;
+        public static Expression<Func<User, bool>> ExistByUsername(string userName, Guid id) => x => x.UserName.Value == userName && x.Id != id;
     }
 }

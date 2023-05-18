@@ -5,7 +5,7 @@ using MediatR;
 
 namespace ServiceApplication.CQRS
 {
-    public record DeleteAsyncCommand<ENT, DTO>(string id) : IRequest<bool>
+    public record DeleteAsyncCommand<ENT, DTO>(Guid id) : IRequest<bool>
         where ENT : class, new()
         where DTO : class, new();
 

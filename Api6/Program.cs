@@ -1,5 +1,6 @@
 using Api.Common.MiddleException;
 using Api.Installers;
+using Api6.Common;
 using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -47,7 +48,7 @@ void ConfigureServices(IServiceCollection services)
 
     services.AddMediatrDependecyInjection();
 
-    JwtNoSql(services);
+    Jwt(services);
     services.AddAuthorization();
     services.AddControllers();
 
@@ -66,7 +67,17 @@ void ConfiguracionBase(IServiceCollection services)
     #region swagger
     services.AddSwaggerGen(c =>
     {
-        c.SwaggerDoc("v1", new OpenApiInfo { Title = "API ELEVATOR MANAGER", Version = "v1", Description = "" });
+        c.SwaggerDoc(ConstantsAPI.VersionProject,new OpenApiInfo
+        {
+            Title = ConstantsAPI.NameProject,
+            Version = ConstantsAPI.VersionProject,
+            Description = ConstantsAPI.DescriptionProject,
+            Contact = new OpenApiContact
+            {
+                Email = ContactProject.Email,
+                Name = ContactProject.Name
+            }
+        });
         c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
         {
             Name = "Authorization",
@@ -116,9 +127,8 @@ void ConfiguracionBase(IServiceCollection services)
 
 }
 
-void JwtNoSql(IServiceCollection services)
+void Jwt(IServiceCollection services)
 {
-    #region JWT-mongo
     services.AddAuthentication(options =>
     {
         options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -136,9 +146,8 @@ void JwtNoSql(IServiceCollection services)
                 //ValidIssuer = Configuration["JWT:ValidIssuer"],
 
                 ValidateIssuerSigningKey = true,
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWTMONGO:Secret"]))
+                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
             };
         });
-    #endregion
 }
 

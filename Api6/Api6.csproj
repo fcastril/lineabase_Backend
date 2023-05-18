@@ -14,6 +14,7 @@
     <PackageReference Include="FluentValidation.AspNetCore" Version="11.2.2" />
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="MediatR" Version="9.0.0" />
+    <PackageReference Include="UtilNuget" Version="1.0.8" />
   </ItemGroup>
 
   <ItemGroup>
@@ -35,9 +36,6 @@
     <None Remove="UtilNuget" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="UtilNuget">
-      <HintPath>..\LocalReference\UtilNuget.dll</HintPath>
-    </Reference>
     <None Remove="MediatR.Extensions.Microsoft.DependencyInjection" />
     <None Remove="MediatR" />
   </ItemGroup>

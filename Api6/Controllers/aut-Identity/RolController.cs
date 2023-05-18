@@ -1,4 +1,5 @@
 ﻿using Api.Base;
+using Api6.Common;
 using Domain.Entities;
 using FluentValidation;
 using MediatR;
@@ -9,7 +10,7 @@ using Utilidades;
 
 namespace Api.Controllers
 {
-    [Route(Constants.UriForDefaultWebApi + "[controller]")]
+    [Route(ConstantsAPI.UriForDefaultWebApi + "[controller]")]
     [ApiController]
     public class RolController : HandlerBaseController<Rol, RolDto>
     {

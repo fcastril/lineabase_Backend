@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System;
+using AutoMapper;
 using Domain.Entities;
 using ServiceApplication.Dto;
 
@@ -12,15 +13,10 @@ namespace ServiceApplication.Models.Auth.Mapper
 
             cnf.CreateMap<RolDto, Rol>()
                 .ConstructUsing(s => s != null ? new Rol
-                    (s.Name, s.Description, s.Root) : null);
+                    (s.Id, s.Name, s.Description, s.Root, s.DateCreation, s.Status, s.DateLastUpdate) : null);
 
-            //cnf.CreateMap<RolDto, Rol>();
+            cnf.CreateMap<Rol, RolDto>();
 
-            cnf.CreateMap<Rol, RolDto>()
-              .ForMember(dest => dest.Name, opt => opt.MapFrom(x => x.Name))
-                .ForMember(dest => dest.Description, opt => opt.MapFrom(x => x.Description))
-                    .ForMember(dest => dest.Root, opt => opt.MapFrom(x => x.Root))
-                        .ForMember(dest => dest.Id, opt => opt.MapFrom(x => x.Id));
 
         }
     }

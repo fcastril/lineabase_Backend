@@ -17,13 +17,16 @@ namespace ServiceApplication
 
         Task<List<DTO>> TolistModel();
 
-        Task<bool> DeleteModel(string id);
+        Task<bool> DeleteModel(Guid id);
 
         Task<DTO> SearchModel(string property, string value);
 
         Task<List<DTO>> SearchListModel(string property, string value);
 
         Task<DTO> UpdateModel(DTO entity);
+
+        Task<DTO> GetById(Guid id);
+
 
         Task<List<ENT>> ToListModelBy(Expression<Func<ENT, bool>> expression);
 
