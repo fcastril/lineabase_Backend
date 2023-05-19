@@ -195,6 +195,11 @@ namespace Infrastructure.Repository.Bases
             obj.GetType().GetProperty(NameProperty).SetValue(obj, value);
             return obj;
         }
+        public async Task<bool> Exist(Expression<Func<T, bool>> expression)
+        {
+            var result = await entity.Where(expression).ToListAsync();
+            return result.Count() > 0;
+        }
     }
 }
 

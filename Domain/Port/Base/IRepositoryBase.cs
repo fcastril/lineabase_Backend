@@ -31,5 +31,7 @@ namespace Domain.Port
 
         Task<Paginate<T>> Paginate(Paginate<T> paginateDto);
 
+        Task<bool> Exist(Expression<Func<T, bool>> expression);
+
     }
 }

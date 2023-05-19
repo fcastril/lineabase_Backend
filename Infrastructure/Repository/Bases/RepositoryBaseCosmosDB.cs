@@ -156,5 +156,10 @@ namespace Infrastructure
             obj.GetType().GetProperty(NameProperty).SetValue(obj, value);
             return obj;
         }
+        public async Task<bool> Exist(Expression<Func<T, bool>> expression)
+        {
+            var result = await Coleccion.Find(_ => true).ToListAsync();
+            return result.Count() > 0;
+        }
     }
 }
