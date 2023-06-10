@@ -239,8 +239,6 @@ namespace ServiceApplication.Base
             {
                 AllowNullCollections = true
             };
-            cnf.CreateMap<ENT, DTO>();
-            cnf.CreateMap<DTO, ENT>();
             cnf.CreateMap<Paginate<ENT>, Paginate<DTO>>();
             cnf.CreateMap<Paginate<DTO>, Paginate<ENT>>();
             cnf.CreateMap<ValueObjectString, string>().ConvertUsing(n => n.Value);

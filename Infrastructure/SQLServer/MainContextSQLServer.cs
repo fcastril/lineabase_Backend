@@ -5,16 +5,24 @@ using Domain.Common.Constants;
 using Domain.Port;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.Extensions.Configuration;
 
 namespace Infrastructure.SQLServer
 {
 	public partial class MainContextSQLServer : DbContext, IMainContextSQLServer
 	{
 
-		public MainContextSQLServer()
-		{
-		}
-		public MainContextSQLServer(DbContextOptions<MainContextSQLServer> options) : base(options)
+        private readonly IConfiguration _configuration;
+
+        public MainContextSQLServer()
+        {
+        }
+
+        public MainContextSQLServer(DbContextOptions<MainContextSQLServer> options, IConfiguration configuration) : base(options)
+        {
+            _configuration = configuration;
+        }
+        public MainContextSQLServer(DbContextOptions<MainContextSQLServer> options) : base(options)
 		{
 		}
 		public MainContextSQLServer(string connectionString) : base(GetOptions(connectionString,null))
@@ -39,7 +47,8 @@ namespace Infrastructure.SQLServer
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=tcp:svr-lineabase.database.windows.net,1433;Initial Catalog=dbLineaBase;Persist Security Info=False;User ID=sa-lineabase;Password=L1n34B4s3**;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;"); // Reemplaza "cadenaDeConexion" por tu cadena de conexión real
+            var connectionString = _configuration[$"{nameof(ConfigurateSQLServer)}:{nameof(ConfigurateSQLServer.ConnectionString)}"];
+            optionsBuilder.UseSqlServer(connectionString);
         }
 
     }
