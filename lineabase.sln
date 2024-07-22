@@ -16,7 +16,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServiceApplication", "Servi
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UnitMSTest", "UnitMSTest\UnitMSTest.csproj", "{312F7C57-C53E-439A-83C0-1B8817969CC7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api6", "Api6\Api6.csproj", "{3A7FFA8B-6CF9-410B-824A-6C667F2CB6DE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Api\Api.csproj", "{3A7FFA8B-6CF9-410B-824A-6C667F2CB6DE}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WorkerServiceBus", "Worker\WorkerServiceBus.csproj", "{BC988A01-148F-456C-BEF5-4F8E4915F4AA}"
 EndProject

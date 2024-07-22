@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Api6.Common
+namespace Api.Common
 {
 	public static class ConstantsAPI
 	{

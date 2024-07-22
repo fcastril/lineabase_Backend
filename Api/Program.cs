@@ -1,6 +1,6 @@
 using Api.Common.MiddleException;
 using Api.Installers;
-using Api6.Common;
+using Api.Common;
 using FluentValidation.AspNetCore;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;

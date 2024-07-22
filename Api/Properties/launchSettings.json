@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "Api6": {
+    "Api": {
       "commandName": "Project",
       "launchBrowser": true,
       "launchUrl": "swagger",

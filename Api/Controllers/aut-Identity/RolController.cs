@@ -1,5 +1,5 @@
 ﻿using Api.Base;
-using Api6.Common;
+using Api.Common;
 using Domain.Entities;
 using FluentValidation;
 using MediatR;

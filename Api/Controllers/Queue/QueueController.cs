@@ -1,5 +1,5 @@
 ﻿using Api.Base;
-using Api6.Common;
+using Api.Common;
 using Domain.Common;
 using Domain.Entities;
 using MediatR;
@@ -15,7 +15,7 @@ using Utilidades;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
-namespace Api6.Controllers
+namespace Api.Controllers
 {
     [Route(ConstantsAPI.UriForDefaultWebApi + "[controller]")]
     [ApiController]

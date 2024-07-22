@@ -1,5 +1,5 @@
 ﻿using Api.Base;
-using Api6.Common;
+using Api.Common;
 using Domain.Entities;
 using FluentValidation;
 using MediatR;
@@ -25,7 +25,7 @@ namespace Api.Controllers
         [AllowAnonymous]
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> InicialSesion(Login login) => this.HandlerResponse(await _mediator.Send(new LoginAsyncQuery(login)));
+        public async Task<IActionResult> Login(Login login) => this.HandlerResponse(await _mediator.Send(new LoginAsyncQuery(login)));
 
     }
 }

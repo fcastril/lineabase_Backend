@@ -11,7 +11,7 @@ namespace Api.Base
 #if DEBUG
     [AllowAnonymous]
     #else
-        [Authorize]
+        [Authorize]s
     #endif
     public abstract partial class HandlerBaseController<ENT, DTO>
         where ENT : class, new()
@@ -24,8 +24,8 @@ namespace Api.Base
             _validator = validator;
         }
 
-        [HttpPost("create")]
-        public async Task<IActionResult> Create(DTO dto)
+        [HttpPost]
+        public async Task<IActionResult> Post(DTO dto)
         {
             var validate = await _validator.ValidateAsync(dto);
             if (validate.Errors.Count > 0)
@@ -35,8 +35,8 @@ namespace Api.Base
             return this.HandlerResponse(await _mediator.Send(new CreateAsyncCommand<ENT, DTO>(dto)));
         }
 
-        [HttpPut("update")]
-        public async Task<IActionResult> Update(DTO dto)
+        [HttpPut]
+        public async Task<IActionResult> Put(DTO dto)
         {
             var validate = await _validator.ValidateAsync(dto);
             if (validate.Errors.Count > 0)
@@ -46,19 +46,19 @@ namespace Api.Base
             return this.HandlerResponse(await _mediator.Send(new UpdateAsyncCommand<ENT, DTO>(dto)));
         }
 
-        [HttpGet("get")]
+        [HttpGet]
         public async Task<IActionResult> Get()
         {
             return this.HandlerResponse(await _mediator.Send(new ToListAsyncQuery<ENT, DTO>()));
         }
-        [HttpGet("getById")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetById(Guid id)
         {
 
             return this.HandlerResponse(await _mediator.Send(new GetByIdAsyncQuery<ENT,DTO>(id)));;
         }
 
-        [HttpDelete("delete")]
+        [HttpDelete()]
         public async Task<IActionResult> Delete(Guid id)
         {
             return this.HandlerResponse(await _mediator.Send(new DeleteAsyncCommand<ENT, DTO>(id)));
