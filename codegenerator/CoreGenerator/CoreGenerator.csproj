@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="LogicGenerator\" />
+    <None Remove="Enums\" />
+    <None Remove="Objects\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="LogicGenerator\" />
+    <Folder Include="Enums\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SqlServerConnector\SqlServerConnector.csproj" />
+    <ProjectReference Include="..\SqliteConnector\SqliteConnector.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+  </ItemGroup>
+</Project>

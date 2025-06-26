@@ -1,0 +1,54 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Domain\Context\CustomerTests\**" />
+    <EmbeddedResource Remove="Domain\Context\CustomerTests\**" />
+    <None Remove="Domain\Context\CustomerTests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Infrastructure\Repository\Bases\PaginatorTests\PaginatorTests.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageReference Include="MSTest.TestAdapter" Version="3.7.0" />
+    <PackageReference Include="MSTest.TestFramework" Version="3.7.0" />
+    <PackageReference Include="coverlet.collector" Version="6.0.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="NUnit" Version="4.3.2" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.0.1" />
+
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="BaseTest\" />
+    <None Remove="Moq" />
+    <None Remove="Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Api8\Api8.csproj" />
+    <ProjectReference Include="..\ServiceApplication\ServiceApplication.csproj" />
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="BlobStorageMtow">
+      <HintPath>..\LocalReference\BlobStorageMtow.dll</HintPath>
+    </Reference>
+    <Reference Include="UtilNuget">
+      <HintPath>..\LocalReference\UtilNuget.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Infrastructure\Repository\Bases\PaginatorTests\" />
+  </ItemGroup>
+</Project>

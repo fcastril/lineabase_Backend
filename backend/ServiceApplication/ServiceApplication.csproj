@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Models\BussinessPartner\**" />
+    <EmbeddedResource Remove="Models\BussinessPartner\**" />
+    <None Remove="Models\BussinessPartner\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="11.0.1" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Azure.Messaging.ServiceBus" Version="7.18.2" />
+    <PackageReference Include="Azure.Storage.Blobs" Version="12.23.0" />
+    <PackageReference Include="EPPlus" Version="7.5.2" />
+    <PackageReference Include="FluentValidation" Version="11.4.0" />
+    <PackageReference Include="MediatR" Version="11.0.0" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0" />
+    <PackageReference Include="Syncfusion.XlsIO.Net.Core" Version="28.1.37" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.JsonPatch" Version="9.0.0" />
+
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.4.0" />
+
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="ReglasNegocio\Interfaces\ISeguridadNegocio.cs" />
+    <Compile Remove="ReglasNegocio\Implementaciones\SeguridadNegocio.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="ReglasNegocio\Implementaciones\MongoAut\" />
+    <None Remove="ReglasNegocio\Implementaciones\SqlAut\" />
+    <None Remove="ReglasNegocio\Interfaces\MongoAut\" />
+    <None Remove="ReglasNegocio\Interfaces\SqlAut\" />
+    <None Remove="Base\" />
+    <None Remove="Models\Auth\" />
+    <None Remove="Models\Auth\Service\" />
+    <None Remove="Models\Auth\Interface\" />
+    <None Remove="Models\Files\" />
+    <None Remove="Models\Test\" />
+    <None Remove="Port\" />
+    <None Remove="Models\Porcicultura\" />
+    <None Remove="Models\Inventario\" />
+    <None Remove="Models\Parametros\" />
+    <None Remove="Models\App\" />
+    <None Remove="Base\Dto\" />
+    <None Remove="Models\Customer\" />
+    <None Remove="FluentValidation.DependencyInjectionExtensions" />
+    <None Remove="UtilNuget" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Base\Dto\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="BlobStorageMtow">
+      <HintPath>..\LocalReference\BlobStorageMtow.dll</HintPath>
+    </Reference>
+    <Reference Include="MTWO.Connector.Events.Async">
+      <HintPath>..\LocalReference\MTWO.Connector.Events.Async.dll</HintPath>
+    </Reference>
+    <Reference Include="ServiceBus">
+      <HintPath>..\LocalReference\ServiceBus.dll</HintPath>
+    </Reference>
+    <Reference Include="UtilNuget">
+      <HintPath>..\LocalReference\UtilNuget.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

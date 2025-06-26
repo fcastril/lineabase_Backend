@@ -1,0 +1,72 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Common\Exception\**" />
+    <Compile Remove="Context\Compartidas\**" />
+    <Compile Remove="Context\Projects\**" />
+    <EmbeddedResource Remove="Common\Exception\**" />
+    <EmbeddedResource Remove="Context\Compartidas\**" />
+    <EmbeddedResource Remove="Context\Projects\**" />
+    <None Remove="Common\Exception\**" />
+    <None Remove="Context\Compartidas\**" />
+    <None Remove="Context\Projects\**" />
+    <None Remove="Context\Porcicultura\" />
+    <None Remove="Context\Inventario\" />
+    <None Remove="Context\Parametros\" />
+    <None Remove="Context\SeguridadApp\" />
+    <None Remove="Context\Customer\" />
+    <None Remove="Context\Auth\Specifications\" />
+    <None Remove="Context\Project\" />
+    <None Remove="Services\" />
+    <None Remove="Context\Currency\" />
+    <None Remove="Context\ControllingUnit\" />
+    <None Remove="Context\PrcPackage\" />
+    <None Remove="UtilNuget" />
+    <None Remove="Newtonsoft.Json" />
+    <None Remove="Microsoft.Extensions.Configuration" />
+    <None Remove="Context\Actuals\" />
+    <None Remove="Context\ACC\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Entidades\" />
+    <None Remove="Entidades\SqlServer\" />
+    <None Remove="Entidades\MongoDB\" />
+    <None Remove="Entidades\Mongo\Compartidas\" />
+    <None Remove="Entidades\SqlServer\Identity\" />
+    <None Remove="Entidades\SqlServer\Compartidas\" />
+    <None Remove="Entidades\Mongo\Autenticacion\" />
+    <None Remove="Entidades\Compartidas\" />
+    <None Remove="Entidades\Identity\" />
+    <None Remove="Port\" />
+    <None Remove="Port\Base\" />
+    <None Remove="Context\Auth\" />
+    <None Remove="Context\Auth\Identity\" />
+    <None Remove="Common\" />
+    <None Remove="Common\Enumeradores\" />
+    <None Remove="Common\Entities\" />
+    <None Remove="Common\Excepciones\" />
+    <None Remove="Context\Archivo\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Context\Auth\Specifications\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CSharpFunctionalExtensions" Version="3.4.3" />
+    <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="9.0.0" />
+    <PackageReference Include="MongoDB.Driver" Version="3.1.0" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.6.0.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="9.0.0" />
+    <PackageReference Include="VIESAPI.VIESAPIClient" Version="1.2.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UtilNuget">
+      <HintPath>..\LocalReference\UtilNuget.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

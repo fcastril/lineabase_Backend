@@ -1,0 +1,12 @@
+using Domain.Entities;
+using ServiceApplication.Dto;
+
+namespace ServiceApplication
+{
+    public interface IProblemDetailsService : IBaseServiceApplication<ProblemDetails, ProblemDetailsDto>
+    {
+
+
+
+    }
+}

@@ -1,0 +1,109 @@
+# Variable Group 'MTWO.BC-DEV' was defined in the Variables tab
+# Agent Queue 'Azure Pipelines' was used with unrecognized Agent Specification, vmImage property must be specified to determine image - https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/hosted?view=azure-devops&tabs=yaml#software
+trigger:
+  branches:
+    include:
+    - dev
+    exclude:
+      - feature/*
+name: $(date:yyyyMMdd)$(rev:.r)
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: dev
+jobs:
+- job: Job_1
+  displayName: Agent job 1
+  pool:
+    name: Azure Pipelines
+  steps:
+  - checkout: self
+    fetchDepth: 1
+  
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: '**/*.csproj'
+      verbosityRestore: Detailed
+      verbosityPack: Detailed
+
+  - task: replacetokens@6
+    inputs:
+      root: 'Api8'
+      sources: '**/*.json'
+
+  - task: SonarQubePrepare@7
+    inputs:
+      SonarQube: ff39ff11-728e-45eb-a18f-00c0e8eb9790
+      scannerMode: 'dotnet'
+      projectKey: 'mtwo.accelerator'
+      projectName: 'mtwo.accelerator'
+      extraProperties: |
+        sonar.cs.opencover.reportsPaths=**/coverage.opencover.xml
+        sonar.cs.vstest.reportsPaths=**/*.trx 
+        sonar.exclusions=**/Program.cs,**/DependencyInjection*,**s/k6/*.js,**s/k6/Utils/Variables.js,**s/k6/Utils/GetToken.js
+        sonar.coverage.exclusions=**/Program.cs,**/DependencyInjection*
+        sonar.scm.disabled=true
+  
+  - task: PowerShell@2
+    displayName: PowerShell Script Sonar
+    inputs:
+      targetType: inline
+      script: >-
+        $params = "$env:SONARQUBE_SCANNER_PARAMS" -replace '"sonar.branch.name":"[\w/,-.]*"\,?'
+
+        Write-Host "##vso[task.setvariable variable=SONARQUBE_SCANNER_PARAMS]$params"
+  
+  - task: Bash@3
+    inputs:
+      targetType: 'inline'
+      script: |
+        dotnet tool install --global dotnet-sonarscanner  --version 4.8.0
+        dotnet tool install --global dotnet-reportgenerator-globaltool --version 5.0.0
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      projects: '**/*.csproj'
+      arguments: --configuration $(BuildConfiguration)
+      verbosityRestore: Detailed
+      verbosityPack: Detailed
+
+  - task: DotNetCoreCLI@2
+    displayName: Test
+    inputs:
+      command: test
+      projects: '**/UnitMSTest/*.csproj'
+      publishTestResults: false
+      arguments: --no-restore --configuration $(buildConfiguration) --logger trx --collect "XPlat Code Coverage;Format=opencover" --results-directory "testresult" 
+      verbosityRestore: Detailed
+      verbosityPack: Detailed  
+  
+  - task: DotNetCoreCLI@2
+    displayName: Publish
+    inputs:
+      command: publish
+      publishWebProjects: True
+      projects: '**/*.csproj'
+      arguments: --configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)
+      zipAfterPublish: True
+      verbosityRestore: Detailed
+      verbosityPack: Detailed
+
+  - task: SonarQubeAnalyze@7
+    inputs:
+      jdkversion: 'JAVA_HOME_17_X64'
+  
+  - task: SonarQubePublish@7
+    inputs:
+      pollingTimeoutSec: '300'
+
+  - task: PublishBuildArtifacts@1
+    displayName: Publish Artifact
+    condition: succeededOrFailed()
+    inputs:
+      PathtoPublish: $(build.artifactstagingdirectory)
+      TargetPath: '\\my\share\$(Build.DefinitionName)\$(Build.BuildNumber)'
+...
